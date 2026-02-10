@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SiwFood - Scheda Ricetta</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+	<h1>Dettagli sulla ricetta</h1>
+
+	<div th:if="${recipe}">
+		<h3 th:text="${recipe.name}"></h3>
+		<p>Inventore: <span th:text="${recipe.inventor.name} + ' ' + ${recipe.inventor.surname}"></span></p>
+		<p>Ingredienti:</p>
+		<ul>
+			<li th:each="entry : ${recipe.ingredients.entrySet()}" th:if="${entry.value > 0}"
+				th:text="${entry.key.name + ': ' + entry.value + ' grammi'}"></li>
+		</ul>
+		<p>Descrizione: <span th:text="${recipe.description}"></span></p>
+		<p>Immagini:</p>
+		<div th:each="base64String : ${base64Strings}">
+			<img th:src="'data:image/jpeg;base64,' + ${base64String}" alt="Recipe Image"
+				style="max-width: 30%; height: auto;" />
+		</div>
+	</div>
+	<div th:unless="${recipe}">La ricetta non esiste</div>
+
+</body>
+
+</html>

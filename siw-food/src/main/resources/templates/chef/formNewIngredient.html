@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SiwFood - Nuovo Ingrediente</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+	<h1>Aggiungi un nuovo ingrediente</h1>
+	<form th:action="@{/chef/ingredient}" method="POST" th:object="${ingredient}">
+
+		<div th:if="${#fields.hasGlobalErrors()}">
+			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+		</div>
+
+		<h3>Dettagli</h3>
+		<div>
+			<label>Nome:</label>
+			<span><input type="text" th:field="${ingredient.name}" /></span>
+			<span th:if="${#fields.hasErrors('name')}" th:errors="*{nome}">
+			</span>
+		</div>
+
+		<div>
+			<span><button type="submit">Conferma</button></span>
+		</div>
+	</form>
+</body>
+
+</html>

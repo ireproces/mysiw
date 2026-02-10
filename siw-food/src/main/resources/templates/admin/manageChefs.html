@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SiwFood - Gestione operazioni per gli Chef</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+	<h1>Gestisci gli chef</h1>
+	<h3>in archivio:</h3>
+	<div th:if="${chefs==null || chefs.isEmpty()}">Non ci sono chef nel sistema</div>
+	<ul>
+		<li th:each="chef : ${chefs}">
+			<a th:href="@{'/public/chef/' + ${chef.id}}" th:text="${chef.name} + ' ' + ${chef.surname}">Dino Risi</a>
+			<form th:action="@{'/admin/deleteChef/' + ${chef.id}}" method="post">
+				<button type="submit">Elimina</button>
+			</form>
+		</li>
+	</ul>
+</body>
+
+</html>

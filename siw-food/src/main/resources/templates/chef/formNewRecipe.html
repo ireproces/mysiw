@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>SiwFood - Nuova Ricetta</title>
+	<link rel="stylesheet" href="/css/stile.css">
+</head>
+
+<body>
+
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+	<h1>Aggiungi una nuova ricetta</h1>
+	<form th:action="@{/chef/newRecipe}" method="post" enctype="multipart/form-data">
+
+		<!-- Campo nascosto per passare lo chef (se necessario) -->
+		<input type="hidden" name="chefId" th:value="${chef.id}">
+
+		<!-- Campo per il nome della ricetta -->
+		<h3>Dettagli</h3>
+		<div>
+			<label for="name">Nome:</label>
+			<input type="text" id="name" name="name" th:field="*{recipe.name}" required />
+		</div>
+
+		<!-- Campo per la descrizione -->
+		<div>
+			<label for="description">Descrizione:</label>
+			<textarea id="description" name="description" th:field="*{recipe.description}" required></textarea>
+		</div>
+
+		<!-- Sezione per gli ingredienti e le loro quantità -->
+		<h3>Ingredienti</h3>
+		<div th:each="ingredient : ${ingredients}">
+			<label th:text="${ingredient.name}"></label>
+			<input type="number" th:attr="name='ingredientQuantities[' + ${ingredient.id} + ']'"
+				placeholder="Peso in grammi">
+		</div>
+
+		<h3>Immagini</h3>
+		<div>
+			<label for="uploadedImages">Carica:</label>
+			<input type="file" id="uploadedImages" name="uploadedImages" multiple />
+		</div>
+
+
+		<!-- Bottone di invio -->
+		<button type="submit">Aggiungi Ricetta</button>
+	</form>
+
+</body>
+
+</html>

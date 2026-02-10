@@ -1,0 +1,23 @@
+### Maven ###
+target/
+*.log
+
+### Eclipse ###
+.settings/
+.classpath
+.project
+bin/
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+
+### VsCode ###
+.vscode/
+
+### Sistema Operativo ###
+.DS_Store
+Thumbs.db
+
+### Spring Boot ###
+HELP.md

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SiwFood - Gestione delle operazioni per gli ingredienit</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+	<h1>Gestisci gli ingredienti</h1>
+	
+	<h3>in archivio:</h3>
+	<div th:if="${ingredients==null || ingredients.isEmpty()}">Non ci sono ingredienti nel sistema</div>
+	<ul>
+		<li th:each="ingredient : ${ingredients}">
+			<a th:href="@{'/chef/ingredient/' + ${ingredient.id}}" th:text="${ingredient.name}"></a>
+			<form th:action="@{'/deleteIngredient/' + ${ingredient.id}}" method="post">
+				<button type="submit">Elimina</button>
+			</form>
+		</li>
+	</ul>
+
+	<h3>Altre operazioni:</h3>
+	<div>
+		<i>Crea </i><a href="/chef/formNewIngredient">nuovo ingrediente</i>
+	</div>
+</body>
+
+</html>

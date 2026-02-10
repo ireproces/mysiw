@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SiwFood - Gestione operazioni su ricette</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+	<h1>Gestisci le ricette</h1>
+	<h3>in archivio:</h3>
+	<div th:if="${recipes==null || recipes.isEmpty()}">Non ci sono ricette nel sistema</div>
+	<ul>
+		<li th:each="recipe : ${recipes}">
+			<a th:href="@{'/public/recipe/' + ${recipe.id}}"
+				th:text="${recipe.name} + ' (' + ${recipe.inventor.name} + ${recipe.inventor.surname} + ')'"></a>
+			<form th:action="@{'/admin/deleteRecipeAdmin/' + ${recipe.id}}" method="post">
+				<button type="submit">Elimina</button>
+			</form>
+		</li>
+	</ul>
+</body>
+
+</html>

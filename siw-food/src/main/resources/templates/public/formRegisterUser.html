@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>SiwFood - Registrazione</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div>
+		<a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a>
+	</div>
+
+	<h1>Registrazione nuovo utente</h1>
+	<form th:action="@{/public/register}" method="POST" th:object="${credentials}">
+
+		<h3>Credenziali di accesso</h3>
+		<div>
+			<label>Username: </label>
+			<span>
+				<input type="text" placeholder="username" required th:field="*{username}" />
+			</span>
+			<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:style="'color:red'"></span>
+		</div>
+		<div>
+			<label>Password: </label>
+			<span><input type="password" placeholder="password" required th:field="*{password}" /></span>
+			<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:style="'color:red'"></span>
+		</div>
+
+		<h3>Dati personali</h3>
+		<div th:object="${user}">
+			<div>
+				<label>Nome: </label>
+				<span><input type="text" placeholder="name" required th:field="*{name}" /></span>
+				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:style="'color:red'"></span>
+			</div>
+			<div>
+				<label>Cognome: </label>
+				<span><input type="text" placeholder="surname" required th:field="*{surname}" /></span>
+				<span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" th:style="'color:red'"></span>
+			</div>
+			<div>
+				<label>Email: </label>
+				<span><input type="text" placeholder="email" required th:field="*{email}" /></span>
+				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:style="'color:red'"></span>
+			</div>
+		</div>
+		<div>
+			<button type="submit">Registra</button>
+		</div>
+	</form>
+</body>
+
+</html>

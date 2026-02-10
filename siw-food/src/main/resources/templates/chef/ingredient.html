@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SiwFood - Scheda Ingrediente</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+	<h1>Dettagli sull'ingrediente</h1>
+
+	<div th:if="${ingredient}">
+		<p>Nome: <span th:text="${ingredient.name}"></span></p>
+	</div>
+	<div th:unless="${ingredient}">L'ingrediente non esiste</div>
+
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SiwFood - Gestione operazioni per ricette personali</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+	<h1>Gestisci le tue ricette</h1>
+
+	<div th:if="${errorMessage}" class="error">
+		<p th:text="${errorMessage}"></p>
+	</div>
+
+	<h3>in archivio:</h3>
+	<div th:if="${recipes == null || recipes.isEmpty()}">Non ci sono ricette nel sistema</div>
+	<ul>
+		<li th:each="recipe : ${recipes}">
+			<a th:href="@{'/public/recipe/' + ${recipe.id}}"
+				th:text="${recipe.name} + ' (' + ${recipe.inventor.name} + ' ' + ${recipe.inventor.surname} + ')'"></a>
+			<div
+				th:if="${authenticatedChef.name == recipe.inventor.name and authenticatedChef.surname == recipe.inventor.surname}">
+				<form th:action="@{'/chef/deleteRecipeChef/' + ${recipe.id}}" method="post">
+					<button type="submit">Elimina</button>
+				</form>
+			</div>
+		</li>
+	</ul>
+
+	<h3>Altre operazioni:</h3>
+	<div>
+		<i>Crea </i><a href="/chef/formNewRecipe">nuova ricetta</i>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+	<meta charset="UTF-8">
+	<title>SiwFood - Update Account Chef</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+	<h1>Completa il tuo profilo</h1>
+
+	<!-- Stampa il nome e il cognome dello chef -->
+	<h3>Dati personali</h3>
+	<p>Chef: <span th:text="${chef.name}"></span> <span th:text="${chef.surname}">Nome Cognome</span></p>
+
+	<form th:action="@{/chef/updateAcc}" method="post" enctype="multipart/form-data">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		<input type="hidden" name="id" th:value="${chef.id}" />
+		<div>
+			<label for="dateOfBirth">Data di nascita:</label>
+			<input type="date" id="dateOfBirth" th:name="dateOfBirth" th:value="${chef.dateOfBirth}" />
+		</div>
+
+		<h4>Foto</h4>
+		<div>
+			<label for="uploadedImage">Carica:</label>
+			<input type="file" id="uploadedImage" th:name="uploadedImage" accept="image/*" />
+		</div>
+
+		<button type="submit">Salva</button>
+	</form>
+
+</body>
+
+</html>

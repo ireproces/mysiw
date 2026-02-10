@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SiwFood - Scheda Chef</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+	<h1>Informazioni sullo Chef</h1>
+	
+	<h3>Dati anagrafici</h3>
+	<div th:if="${chef}">
+		<p>Nome: <span th:text="${chef.name}"></span> </p>
+		<p>Cognome: <span th:text="${chef.surname}"></span> </p>
+		<p>Data di nascita:
+			<span th:unless="${chef.dateOfBirth}">Non definita</span>
+			<span th:if="${chef.dateOfBirth}" th:text="${chef.dateOfBirth}"></span>
+		</p>
+		
+		<h4>Foto:</h4>
+		<div th:if="${base64Image}">
+			<img th:src="'data:image/jpeg;base64,' + ${base64Image}" alt="Foto dello chef"
+				style="max-width: 70px; height: auto;" />
+		</div>
+
+		<h3>Ricette scritte:</h3>
+		<div th:if="${recipes==null || recipes.isEmpty()}">Non ci sono ricette per questo chef</div>
+		<ul>
+			<li th:each="recipe : ${recipes}">
+				<a th:href="@{'/public/recipe/' + ${recipe.id}}">
+					<span th:text="${recipe.name}"></span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div th:unless="${chef}">Non esiste lo chef richiesto</div>
+
+</body>
+
+</html>
