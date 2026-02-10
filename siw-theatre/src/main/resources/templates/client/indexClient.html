@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SiwTheatre - Homepage client</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<header class="d-flex justify-content-between p-3 bg-light">
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout" class="btn btn-outline-secondary ml-2">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login" class="btn btn-outline-primary">Login</a>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="text-center my-4">
+			<img src="/images/logo-siwtheatre.png" class="img-fluid" alt="Logo SIW Theatre" /></a>
+		</div>
+
+		<!-- Stampiamo il nome e il cognome dell'utente loggato -->
+		<h1 class="text-center my-4" th:text="'Benvenuto, ' + ${name} + ' ' + ${surname}">Benvenuto, utente</h1>
+
+		<div class="row">
+
+			<div class="col-md-6">
+				<h3>Consultazione archivio:</h3>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+						<a href="/public/operas" class="text-decoration-none">Elenco </a><i>delle opere</i>
+					</li>
+					<li class="list-group-item">
+						<a href="/public/actors" class="text-decoration-none">Elenco </a> <i>degli attori</i>
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-md-6">
+				<h3>Profilo:</h3>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+						<a href="/client/showAccount" class="text-decoration-none">Visualizza profilo</a>
+					</li>
+					<li class="list-group-item">
+						<a href="/client/updateAccount" class="text-decoration-none">Aggiorna profilo</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="row mt-4">
+			<div class="col-md-6">
+				<h3>Biglietti:</h3>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+						<a href="/client/manageTicketsClient" class="text-decoration-none">Gestione </a><i>delle
+							prenotazioni</i>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

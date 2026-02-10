@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SiwTheatre - Lista Clients</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<header class="d-flex justify-content-between p-3 bg-light">
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout" class="btn btn-outline-secondary ml-2">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login" class="btn btn-outline-primary">Login</a>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="text-center my-4">
+			<a href="/"><img src="/images/logo-siwtheatre.png" class="img-fluid" alt="Logo SIW Theatre" /></a>
+		</div>
+
+		<h1 class="text-center my-4">Utenti registrati</h1>
+
+		<h3>Filtri:</h3>
+		<form action="/admin/filterProfiles" method="GET">
+			<div class="form-row align-items-end mb-3">
+				<div class="col-auto">
+					<label for="surname" class="col-sm-2 col-form-label">Cognome</label>
+				</div>
+				<div class="col">
+					<input type="text" class="form-control" id="surname" name="surname">
+				</div>
+				<div class="col-auto">
+					<button type="submit" class="btn btn-primary">Filtra</button>
+				</div>
+			</div>
+		</form>
+
+		<h3>Lista:</h3>
+		<div th:if="${clients==null || clients.isEmpty()}">Non ci sono utenti nel sistema</div>
+		<ul class="list-group">
+			<li class="list-group-item" th:each="client : ${clients}">
+				<a th:href="@{'/client/profile/' + ${client.id}}"
+					th:text="${client.name} + ' ' + ${client.surname}">Anagrafica utente</a>
+			</li>
+		</ul>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

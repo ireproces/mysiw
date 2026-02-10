@@ -1,0 +1,57 @@
+body {
+	font-family: "Geneva";
+	color: dimgrey;
+}
+
+a {
+	text-decoration: none;
+	color: darkgrey;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+label {
+	width: 8em;
+	display: inline-block;
+}
+
+header {
+	background-color: rgb(231, 78, 72);
+	color: white;
+	height: 1.5em;
+	margin-bottom: 0.5em;
+	padding: 0.2em;
+	text-align: right;
+}
+
+header a {
+	text-decoration: none;
+	color: white;
+	font-size: 0.6em;
+}
+
+/* immagine */
+
+.container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.image-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 3vh; /* 20% dell'altezza della viewport */
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+	height: auto;
+	width: auto;
+	object-fit: contain; /* Adatta l'immagine mantenendo le proporzioni */
+}

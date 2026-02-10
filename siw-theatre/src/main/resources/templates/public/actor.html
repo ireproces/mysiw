@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SiwTheatre - Scheda attore</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		.field-label {
+			font-size: 1.55rem;
+			/* Adjust the size as needed */
+		}
+
+		.field-value {
+			font-size: 1.175rem;
+			/* Slightly smaller than the label */
+		}
+	</style>
+</head>
+
+<body>
+
+	<header class="d-flex justify-content-between p-3 bg-light">
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout" class="btn btn-outline-secondary ml-2">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login" class="btn btn-outline-primary">Login</a>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="text-center my-4">
+			<a href="/"><img src="/images/logo-siwtheatre.png" class="img-fluid" alt="Logo SIW Theatre" /></a>
+		</div>
+
+		<h1 class="text-center my-4">Dettagli sull'attore</h1>
+
+		<div class="row">
+			<div class="col-md-4">
+				<div th:if="${base64Image}">
+					<img th:src="'data:image/jpeg;base64,' + ${base64Image}" alt="Foto dell'attore" class="img-fluid" />
+				</div>
+			</div>
+			<div class="col-md-4" th:if="${actor}">
+				<h4 class="field-label">Nome: <span class="field-value" th:text="${actor.name}"></span>
+				</h4>
+				<h4 class="field-label">Cognome: <span class="field-value" th:text="${actor.surname}"></span></h4>
+				<h4 class="field-label">Data di nascita:
+					<span class="field-value" th:unless="${actor.dateOfBirth}">Non definita</span>
+					<span class="field-value" th:if="${actor.dateOfBirth}" th:text="${actor.dateOfBirth}">
+					</span>
+				</h4>
+			</div>
+		</div>
+		<div th:unless="${actor}">Non esiste l'attore richiesto</div>
+	</div>
+
+</body>
+
+</html>

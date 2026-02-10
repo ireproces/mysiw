@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SiwTheatre - Registrazione</title>
+	<!--	<link rel="stylesheet" href="/css/stile.css" />-->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<!--	<header class="d-flex justify-content-between p-3 bg-light">-->
+	<!--		<div th:if="${#request.userPrincipal}">-->
+	<!--			<span th:text="${#request.userPrincipal.principal.username}"></span>-->
+	<!--			<a href="/public/logout" class="btn btn-outline-secondary ml-2">Logout</a>-->
+	<!--		</div>-->
+	<!--		<div th:unless="${#request.userPrincipal}">-->
+	<!--			<a href="/public/login" class="btn btn-outline-primary">Login</a>-->
+	<!--		</div>-->
+	<!--	</header>-->
+
+	<div class="container">
+		<div class="text-center my-4">
+			<a href="/"><img src="/images/logo-siwtheatre.png" class="img-fluid" alt="Logo SIW Theatre" /></a>
+		</div>
+
+		<h1 class="mb-4">Registrazione nuovo utente</h1>
+		<form th:action="@{/public/register}" method="POST" th:object="${credentials}">
+
+			<h3>Credenziali di accesso</h3>
+
+			<div class="row g-3">
+				<div class="col-md-6">
+					<label for="floatingUsername">Username</label>
+					<input type="text" class="form-control" id="floatingUsername" placeholder="username" required
+						th:field="*{username}" />
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<label for="floatingPassword">Password</label>
+					<input type="password" class="form-control" id="floatingPassword" placeholder="password" required
+						th:field="*{password}" />
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+					</div>
+				</div>
+			</div>
+
+			<h3 class="mt-4">Dati personali</h3>
+			<div th:object="${user}">
+
+				<div class="form-group mb-3">
+					<div class="form-floating is-invalid">
+						<input type="text" class="form-control" id="floatingName" placeholder="nome" required
+							th:field="*{name}" />
+						<label for="floatingName">Nome</label>
+					</div>
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+				</div>
+
+				<div class="form-group mb-3">
+					<div class="form-floating is-invalid">
+						<input type="text" class="form-control" id="floatingSurname" placeholder="cognome" required
+							th:field="*{surname}" />
+						<label for="floatingSurname">Cognome</label>
+					</div>
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+				</div>
+
+				<div class="form-group mb-3">
+					<div class="form-floating is-invalid">
+						<input type="email" class="form-control" id="floatingEmail" placeholder="email" required
+							th:field="*{email}" />
+						<label for="floatingEmail">Email</label>
+					</div>
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+				</div>
+
+			</div>
+			<div>
+				<button type="submit" class="btn btn-primary">Registra</button>
+			</div>
+		</form>
+	</div>
+
+	<!-- jQuery e Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

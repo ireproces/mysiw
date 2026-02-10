@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Siw Theatre - Scheda Client</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		.text-red {
+			color: red;
+		}
+
+		.field-label {
+			font-size: 1.55rem;
+			/* Adjust the size as needed */
+		}
+
+		.field-value {
+			font-size: 1.175rem;
+			/* Slightly smaller than the label */
+		}
+	</style>
+</head>
+
+<body>
+
+	<header class="d-flex justify-content-between p-3 bg-light">
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout" class="btn btn-outline-secondary ml-2">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login" class="btn btn-outline-primary">Login</a>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="text-center my-4">
+			<a href="/"><img src="/images/logo-siwtheatre.png" class="img-fluid" alt="Logo SIW Theatre" /></a>
+		</div>
+
+		<h1 class="text-center my-4">Informazioni del profilo</h1>
+
+		<div th:if="${client}">
+			<div class="row">
+				<div class="col-md-4">
+					<div th:if="${base64Image}">
+						<img th:src="'data:image/jpeg;base64,' + ${base64Image}" alt="Foto dell'utente"
+							style="max-width: 150px; height: auto;" />
+					</div>
+				</div>
+				<div class="col-md-4">
+					<h2> Dati anagrafici</h2>
+					<h4 class="field-label">Nome: <span class="field-value" th:text="${client.name}"></span>
+					</h4>
+					<h4 class="field-label">Cognome: <span class="field-value" th:text="${client.surname}"></span>
+					</h4>
+					<h4 class="field-label">Data di nascita:
+						<span class="field-value" th:unless="${client.dateOfBirth}">Non definita</span>
+						<span class="field-value" th:if="${client.dateOfBirth}" th:text="${client.dateOfBirth}">
+						</span>
+					</h4>
+				</div>
+				<div class="col-md-4">
+					<h3>Biglietti:</h3>
+					<div th:if="${client.tickets==null || client.tickets.isEmpty()}"><span class="field-value">Non ci
+							sono prenotazioni a tuo nome</span>
+					</div>
+					<ul class="list-group">
+						<li class="list-group-item" th:each="ticket: ${client.tickets}">
+							<a th:href="@{'/client/ticket/' + ${ticket.id}}"
+								th:text="${ticket.opera.name}+'  date: '+${ticket.dateEvent}"></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div th:unless="${client}">Non esiste</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

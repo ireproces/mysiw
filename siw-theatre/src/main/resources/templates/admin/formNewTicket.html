@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SiwTheatre - Nuovo biglietto per opera</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<header class="d-flex justify-content-between p-3 bg-light">
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/public/logout" class="btn btn-outline-secondary ml-2">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/public/login" class="btn btn-outline-primary">Login</a>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="text-center my-4">
+			<a href="/"><img src="/images/logo-siwtheatre.png" class="img-fluid" alt="Logo SIW Theatre" /></a>
+		</div>
+
+		<h1 class="text-center my-4">Inserisci un nuovo biglietto</h1>
+		<h2 th:text="'Opera: ' + ${opera.name}">Titolo opera</h2>
+
+		<form th:action="@{/admin/newTicket}" method="POST">
+
+			<!--		 Campo nascosto per passare l'opera-->
+			<input type="hidden" name="operaId" th:value="${opera.id}">
+
+			<h3>Dettagli</h3>
+
+			<div class="mb-3 d-flex align-items-center">
+				<label for="dateEvent" class="field-value me-3">Data evento</label>
+				<input type="date" class="form-control" id="dateEvent" th:name="dateEvent"
+					th:value="${ticket.dateEvent}" required />
+			</div>
+
+			<!-- Campi di testo: prezzo,tipo,ora -->
+			<div class="row g-3">
+				<div class="col-md-6">
+					<label for="floatingType" class="form-label">Tipologia</label>
+					<input type="text" class="form-control" id="floatingType" placeholder="type" required
+						th:field="*{ticket.type}" />
+				</div>
+
+				<div class="col-md-6">
+					<label for="floatingPrice" class="form-label">Prezzo</label>
+					<input type="text" class="form-control" id="floatingPrice" placeholder="price in euro" required
+						th:field="*{ticket.price}" />
+				</div>
+			</div>
+
+			<!-- Bottone di invio -->
+			<div class="mt-3">
+				<button type="submit" class="btn btn-primary">Aggiungi</button>
+			</div>
+		</form>
+	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
